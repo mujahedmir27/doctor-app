@@ -1,6 +1,6 @@
 package com.doctor.app.controller;
 
-import com.doctor.app.model.Doctor;
+import com.doctor.app.dto.DoctorDTO;
 import com.doctor.app.service.DoctorService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,8 +15,8 @@ public class DoctorController {
     }
 
     @GetMapping("/active")
-    public ResponseEntity<List<Doctor>> getActiveDoctors() {
-        List<Doctor> activeDoctor = doctorService.getActiveDoctors();
+    public ResponseEntity<List<DoctorDTO>> getActiveDoctors() {
+        List<DoctorDTO> activeDoctor = doctorService.getActiveDoctors();
         return ResponseEntity.ok(activeDoctor);
     }
 }
