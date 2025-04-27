@@ -46,7 +46,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .filter(a -> a.getStartTime().equals(startTime))
                 .findFirst();
 
-        if (existingAppointment.isPresent() && "BOOKED".equals(existingAppointment.get().getStatus())) {
+        if (existingAppointment.isPresent()) {
             return "Selected appointment slot is already booked";
         }
 
