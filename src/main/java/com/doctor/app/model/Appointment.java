@@ -5,7 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import jakarta.validation.constraints.NotBlank;
+import java.time.LocalTime;
+
 import jakarta.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
@@ -43,10 +44,9 @@ public class Appointment {
 
     @NotNull(message = "Appointment date is required")
     private LocalDate appointmentDate;
-    @NotBlank(message = "Start time is required")
-    private String startTime;
-    @NotBlank(message = "End time is required")
-    private String endTime;
+    @NotNull(message = "Start time is required")
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String status; // BOOKED, CONFIRMED, IN-PROGRESS, COMPLETED, CANCELLED
     private Double amount;
     @CreatedDate
