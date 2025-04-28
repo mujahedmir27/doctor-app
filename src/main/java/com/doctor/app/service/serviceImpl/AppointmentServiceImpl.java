@@ -53,11 +53,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             return "Selected appointment slot is already booked";
         }
 
-        // Calculate and set endTime = startTime + 30 minutes
         try {
             LocalTime start = LocalTime.parse(startTime);
             LocalTime end = start.plusMinutes(30);
-            appointment.setEndTime(end.toString()); // Assuming endTime is a String
+            appointment.setEndTime(end.toString());
         } catch (DateTimeParseException e) {
             return "Invalid start time format";
         }
