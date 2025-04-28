@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.doctor.app.client.PaymentClient;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -33,7 +34,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         Long doctorId = appointment.getDoctor().getId();
         LocalDate appointmentDate = appointment.getAppointmentDate();
-        String startTime = appointment.getStartTime();
+        LocalTime startTime = appointment.getStartTime();
+        LocalDateTime appointmentDateTime = LocalDateTime.of(appointmentDate, startTime);
+        LocalDateTime now = LocalDateTime.now();
+
+        if (appointmentDateTime.isBefore(now)) {
+            return "Cannot book an appointment in the past!";
+        }
 
         Doctor doctor = doctorRepository.findById(doctorId).orElse(null);
         if (doctor == null) {
@@ -54,9 +61,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
 
         try {
-            LocalTime start = LocalTime.parse(startTime);
-            LocalTime end = start.plusMinutes(30);
-            appointment.setEndTime(end.toString());
+            LocalTime end = startTime.plusMinutes(30);
+            appointment.setEndTime(end);
         } catch (DateTimeParseException e) {
             return "Invalid start time format";
         }
