@@ -7,6 +7,7 @@ import com.doctor.app.repository.DoctorRepository;
 import com.doctor.app.service.AppointmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.doctor.app.client.PaymentClient;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -19,10 +20,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
+    private final PaymentClient paymentClient;
 
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository, PaymentClient paymentClient) {
         this.appointmentRepository = appointmentRepository;
         this.doctorRepository = doctorRepository;
+        this.paymentClient = paymentClient;
     }
 
     @Override
@@ -61,7 +64,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         appointment.setStatus("BOOKED");
         appointmentRepository.save(appointment);
-        return "Appointment booked successfully";
+        paymentClient.makePayment(appointment.getId(), appointment.getAmount());
+        return "Appointment booked and payment initiated!";
     }
 
     @Override

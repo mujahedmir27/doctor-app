@@ -26,7 +26,7 @@ public class AppointmentController {
                 appointment.getPatient().getId(), appointment.getDoctor().getId());
 
         String result = appointmentService.bookAppointment(appointment);
-        if ("Appointment booked successfully".equals(result)) {
+        if ("Appointment booked and payment initiated!".equals(result)) {
             return ResponseEntity.ok(result);
         }
         return ResponseEntity.badRequest().body(result);

@@ -48,6 +48,7 @@ public class Appointment {
     @NotBlank(message = "End time is required")
     private String endTime;
     private String status; // BOOKED, CONFIRMED, IN-PROGRESS, COMPLETED, CANCELLED
+    private Double amount;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
